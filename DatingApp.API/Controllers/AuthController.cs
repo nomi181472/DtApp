@@ -1,3 +1,5 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +47,18 @@ namespace DatingApp.API.Controllers {
                 new Claim (ClaimTypes.Name, CheckUser.Name)
             };
             var Keys = new SymmetricSecurityKey (Encoding.UTF8.GetBytes (Config.GetSection ("AppSettings:Token").Value));
+            var Creds = new SigningCredentials (Keys, SecurityAlgorithms.HmacSha512Signature);
+            var TokenDescriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity (Claims),
+                Expires = DateTime.Now.AddDays (1),
+                SigningCredentials = Creds
+            };
+            var TokenHandler = new JwtSecurityTokenHandler ();
+            var mytoken = TokenHandler.CreateToken (TokenDescriptor);
+            return Ok (new {
+                token = TokenHandler.WriteToken (mytoken)
+            });
+
         }
     }
 }
