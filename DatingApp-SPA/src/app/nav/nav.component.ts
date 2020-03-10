@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../services/auth.service";
-import { NEXT } from "@angular/core/src/render3/interfaces/view";
 
 @Component({
   selector: "app-nav",
@@ -18,7 +17,7 @@ export class NavComponent implements OnInit {
         console.log("login successfully");
       },
       error => {
-        console.log("loggin failed");
+        console.log(error);
       }
     );
   }
