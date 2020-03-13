@@ -12,7 +12,7 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 export class NavComponent implements OnInit {
   model: any = {};
   constructor(
-    private authservice: AuthService,
+    public authservice: AuthService,
     private alert: AlertifyService,
     private router: Router
   ) {}
